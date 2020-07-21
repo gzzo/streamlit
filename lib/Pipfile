@@ -23,6 +23,7 @@ sphinx-markdown-tables = "*"
 sphinx-rtd-theme = "*"
 # IMPORTANT: If you need to add a package just for testing, please add it to
 # test-requirements.txt instead.
+gprof2dot = "*"
 
 [packages]
 # IMPORTANT: We should try very hard *not* to add dependencies to Streamlit.

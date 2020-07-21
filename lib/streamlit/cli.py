@@ -18,6 +18,7 @@ from streamlit import config as _config
 
 import os
 import re
+import cProfile
 from typing import Optional
 
 import click
@@ -187,6 +188,17 @@ def main_hello(**kwargs):
     _main_run(filename)
 
 
+@main.command("stats")
+@configurator_options
+def main_hello(**kwargs):
+    """Runs the Hello World script."""
+    from streamlit.stats import stats
+
+    _apply_config_options_from_cli(kwargs)
+    filename = stats.__file__
+    _main_run(filename)
+
+
 @main.command("run")
 @configurator_options
 @click.argument("target", required=True, envvar="STREAMLIT_RUN_TARGET")
@@ -253,7 +265,15 @@ def _main_run(file, args=[]):
     if version.should_show_new_version_notice():
         click.echo(NEW_VERSION_TEXT)
 
-    bootstrap.run(file, command_line, args)
+    if _config.get_option("global.profile"):
+        cProfile.runctx(
+            "import streamlit.bootstrap; streamlit.bootstrap.run(file, command_line, args)",
+            {"file": file, "command_line": command_line, "args": args},
+            None,
+            "out.pstats",
+        )
+    else:
+        bootstrap.run(file, command_line, args)
 
 
 # SUBCOMMAND: cache

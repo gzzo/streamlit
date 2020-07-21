@@ -278,6 +278,14 @@ _create_option(
 )
 
 _create_option(
+    "global.profile",
+    description="Profile streamlit",
+    visibility="hidden",
+    default_val=False,
+    type_=bool,
+)
+
+_create_option(
     "global.minCachedMessageSize",
     description="""Only cache ForwardMsgs that are greater than or equal to
         this minimum.""",

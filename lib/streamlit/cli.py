@@ -190,7 +190,7 @@ def main_hello(**kwargs):
 
 @main.command("stats")
 @configurator_options
-def main_hello(**kwargs):
+def main_stats(**kwargs):
     """Runs the Hello World script."""
     from streamlit.stats import stats
 
